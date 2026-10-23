@@ -5,6 +5,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -27,7 +28,11 @@ public class MainActivity extends AppCompatActivity {
         });
         like = findViewById(R.id.button);
         unlike = findViewById(R.id.button2);
+        if (savedInstanceState != null){
+            likes = savedInstanceState.getInt("likes", 0);
+        }
         textView = findViewById(R.id.textView3);
+        textView.setText(String.valueOf(likes) + " polubień");
         like.setOnClickListener(
                 view -> {
                     likes++;
@@ -42,5 +47,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("likes", likes);
     }
 }
